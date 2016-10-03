@@ -1,7 +1,8 @@
 #define GLEW_STATIC
 
 #include "src/Game.h"
-#include "src/utility_opengl/ResourceManager.h"
+#include "src/utility/ResourceManager.h"
+#include "src/utility/Utility.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -9,9 +10,6 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
-#define GAMELOOP(x) while(!glfwWindowShouldClose(x))
-#define FOR(T, x, end) for(T x = 0; x < end; x++)
 
 using utility_opengl::ResourceManager;
 
@@ -56,9 +54,9 @@ int main(int argc, char* argv[]){
 	lastFrame  = 0.0f;
 	breakout = new Game(WIDTH, HEIGHT);
 
-	breakout->init();
-
 	breakout->state = GAME_ACTIVE;
+
+	breakout->init();
 
 	/**** GAMELOOP ****/
 	GAMELOOP(window){
@@ -76,8 +74,9 @@ int main(int argc, char* argv[]){
 		breakout->update(deltaTime);
 
 		/*** Render ***/
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
 		breakout->render();
 
 		glfwSwapBuffers(window);

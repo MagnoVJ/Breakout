@@ -1,10 +1,17 @@
 #pragma once
 
+#include "GameLevel.h"
+#include "SpriteRenderer.h"
+#include "utility/ResourceManager.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+using utility_opengl::ResourceManager;
 
 enum GameState{
 	GAME_ACTIVE,
@@ -19,6 +26,11 @@ public:
 	GameState state;
 	GLboolean keys[1024];
 	GLuint width, height;
+
+	//Levels
+	std::vector<GameLevel> levels;
+	GLuint                 level;
+
 	//Constructor/Destructor
 	Game(GLuint width, GLuint height);
 	~Game();

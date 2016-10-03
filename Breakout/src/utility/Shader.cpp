@@ -109,6 +109,14 @@ namespace utility_opengl{
 					<< infoLog << "\n -- --------------------------------------------------- -- "
 					<< std::endl;
 			}
+			else{
+				if(type == "VERTEX")
+					std::cout << getShaderName(vFileName) <<" foi compilado com sucesso." << std::endl;
+				else if(type == "FRAGMENT")
+					std::cout << getShaderName(fFileName) <<" foi compilado com sucesso." << std::endl;
+				else if(type == "GEOMETRY")
+					std::cout << getShaderName(gFileName) <<" foi compilado com sucesso." << std::endl;
+			}
 		}
 		else{
 			glGetProgramiv(object, GL_LINK_STATUS, &success);
@@ -118,7 +126,22 @@ namespace utility_opengl{
 					<< infoLog << "\n -- --------------------------------------------------- -- "
 					<< std::endl;
 			}
+			else
+				std::cout << std::endl << "Programa foi linkado com sucesso." << std::endl << std::endl << std::endl;
 		}
+	}
+
+	std::string getShaderName(const GLchar* filePath){
+		std::string filePathString(filePath), outString;
+		std::stringstream ss;
+		for(int i = filePathString.size() - 1; !(filePathString[i] == '/' || filePathString[i] == '\\'); i--)
+			ss << filePathString[i];
+		outString = ss.str();
+		ss.str("");
+		for(std::string::reverse_iterator rit = outString.rbegin(); rit != outString.rend(); ++rit)
+			ss << *rit;
+		return ss.str();
 	}
 	
 }
+

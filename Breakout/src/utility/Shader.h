@@ -6,6 +6,7 @@
 
 #include <GL/glew.h>
 
+#include <sstream>
 #include <string>
 #include <iostream>
 
@@ -14,10 +15,14 @@ namespace utility_opengl{
 	class Shader{
 
 	private:
-		void checkCompileErrors(GLuint object, std::string type); 
+		void checkCompileErrors(GLuint object, std::string type);
 
 	public:
 		GLuint id; 
+
+		const GLchar* vFileName;
+		const GLchar* fFileName;
+		const GLchar* gFileName;
 
 		Shader(){ }
 
@@ -37,5 +42,8 @@ namespace utility_opengl{
 		void setMatrix4  (const GLchar *name, const glm::mat4 &matrix, GLboolean useShader = false);
 
 	};
+
+	/************Funções independentes************/
+	std::string getShaderName(const GLchar* filePath);
 
 }

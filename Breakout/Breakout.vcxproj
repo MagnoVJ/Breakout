@@ -66,17 +66,32 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\utility_opengl\ResourceManager.cpp" />
-    <ClCompile Include="src\utility_opengl\Shader.cpp" />
-    <ClCompile Include="src\utility_opengl\Texture2D.cpp" />
-    <ClCompile Include="src\utility_opengl\VAOController.cpp" />
+    <ClCompile Include="src\GameLevel.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\SpriteRenderer.cpp" />
+    <ClCompile Include="src\utility\ResourceManager.cpp" />
+    <ClCompile Include="src\utility\Shader.cpp" />
+    <ClCompile Include="src\utility\Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\utility_opengl\ResourceManager.h" />
-    <ClInclude Include="src\utility_opengl\Shader.h" />
-    <ClInclude Include="src\utility_opengl\Texture2D.h" />
-    <ClInclude Include="src\utility_opengl\VAOController.h" />
+    <ClInclude Include="src\GameLevel.h" />
+    <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\SpriteRenderer.h" />
+    <ClInclude Include="src\utility\ResourceManager.h" />
+    <ClInclude Include="src\utility\Shader.h" />
+    <ClInclude Include="src\utility\Texture2D.h" />
+    <ClInclude Include="src\utility\Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\shader1.frag" />
+    <None Include="shaders\shader1.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="levels\2_A_few_small_gaps.lvl" />
+    <Text Include="levels\1_Standard.lvl" />
+    <Text Include="levels\3_Space_invader.lvl" />
+    <Text Include="levels\4_Bounce_galore.lvl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

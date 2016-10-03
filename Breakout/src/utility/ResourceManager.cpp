@@ -44,7 +44,12 @@ namespace utility_opengl{
 
 		//Create shader object from source code
 		Shader shader;
-		shader.compile(vShaderCode, fShaderCode, gShaderCode != nullptr ? gShaderCode : nullptr);
+
+		shader.vFileName = vShaderFile;
+		shader.fFileName = fShaderFile;
+		shader.gFileName = gShaderFile;
+
+		shader.compile(vShaderCode, fShaderCode, gShaderFile != nullptr ? gShaderCode : nullptr);
 
 		return shader;
 
@@ -70,7 +75,7 @@ namespace utility_opengl{
 
 		return texture;
 
-	}
+	} 
 
 	Shader ResourceManager::loadShader(const GLchar* vShaderFile, const GLchar* fShaderFile, const GLchar* gShaderFile, std::string name){
 		shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
