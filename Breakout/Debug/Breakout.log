@@ -1,18 +1,15 @@
-﻿Build started 10/3/2016 12:31:49 AM.
+﻿Build started 10/4/2016 6:44:40 PM.
      1>Project "C:\Users\MagnoVJ\documents\visual studio 2012\Projects\Breakout\Breakout\Breakout.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Game.cpp
-         Game.cpp
-     1>c:\users\magnovj\documents\visual studio 2012\projects\breakout\breakout\src\game.cpp(10): warning C4351: new behavior: elements of array 'Game::keys' will be default initialized
-     1>c:\users\magnovj\documents\visual studio 2012\projects\breakout\breakout\src\game.cpp(41): warning C4244: 'argument' : conversion from 'double' to 'GLuint', possible loss of data
-     1>c:\users\magnovj\documents\visual studio 2012\projects\breakout\breakout\src\game.cpp(42): warning C4244: 'argument' : conversion from 'double' to 'GLuint', possible loss of data
-     1>c:\users\magnovj\documents\visual studio 2012\projects\breakout\breakout\src\game.cpp(43): warning C4244: 'argument' : conversion from 'double' to 'GLuint', possible loss of data
-     1>c:\users\magnovj\documents\visual studio 2012\projects\breakout\breakout\src\game.cpp(44): warning C4244: 'argument' : conversion from 'double' to 'GLuint', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\SpriteRenderer.cpp
+         SpriteRenderer.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\MagnoVJ\documents\visual studio 2012\Projects\Breakout\Debug\Breakout.exe" /INCREMENTAL /NOLOGO glfw3.lib glew32s.lib opengl32.lib SOIL.lib "assimp-vc110-mtd.lib" freetype27d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\MagnoVJ\documents\visual studio 2012\Projects\Breakout\Debug\Breakout.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\MagnoVJ\documents\visual studio 2012\Projects\Breakout\Debug\Breakout.lib" /MACHINE:X86 Debug\Main.obj
+         Debug\BallObject.obj
          Debug\Game.obj
          Debug\GameLevel.obj
          Debug\GameObject.obj
+         Debug\ParticleGenerator.obj
          Debug\SpriteRenderer.obj
          Debug\ResourceManager.obj
          Debug\Shader.obj

@@ -39,6 +39,12 @@
     <ClCompile Include="src\utility\Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\BallObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -65,10 +71,18 @@
     <ClInclude Include="src\utility\Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\BallObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader1.vert" />
     <None Include="shaders\shader1.frag" />
+    <None Include="shaders\shader2BallParticles.vert" />
+    <None Include="shaders\shader2BallParticles.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="levels\1_Standard.lvl" />

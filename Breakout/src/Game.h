@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BallObject.h"
 #include "GameLevel.h"
 #include "SpriteRenderer.h"
 #include "utility/ResourceManager.h"
@@ -11,6 +12,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <tuple>
+
 using utility_opengl::ResourceManager;
 
 enum GameState{
@@ -19,7 +22,25 @@ enum GameState{
 	GAME_WIN
 };
 
+enum Direction{
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+};
+
+typedef std::tuple<GLboolean, Direction, glm::vec2> Collision;
+
 class Game{
+
+private:
+	GLboolean checkCollision(const GameObject& one, const GameObject& two); // AABB - AABB collision
+	Collision checkCollision(const BallObject& one, const GameObject& two); // Circle - AABB collision
+	Direction vectorDirection(glm::vec2 target);
+	void doCollisions();
+
+	void resetLevel();
+	void resetPlayer();
 
 public:
 	//Game state
