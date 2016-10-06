@@ -5,11 +5,12 @@ const glm::vec2 PLAYER_SIZE(100, 20);
 const GLfloat PLAYER_VELOCITY = 500.0f; 
 
 const GLfloat BALL_RADIUS = 12.5f;
-const glm::vec2 BALL_INITIAL_VELOCITY(100.0f, -350.0f);
+const glm::vec2 BALL_INITIAL_VELOCITY(200.0f, -450.0f);
 
 GameObject* player;
 SpriteRenderer* renderer;
 BallObject* ball;
+ParticleGenerator* particlesGen;
 
 Game::Game(GLuint width, GLuint height)	: state(GAME_ACTIVE), keys(), width(width), height(height){ }
 
@@ -18,6 +19,7 @@ Game::~Game(){
 	delete player;
 	delete renderer;
 	delete ball;
+	delete particlesGen;
 
 }
 
@@ -131,12 +133,13 @@ void Game::doCollisions(){
 	if(!ball->stuck && std::get<0>(result)){
 		//Chick where it hit the board, and change velocity based on where it hit the board
 		GLfloat centerPaddle = player->position.x + player->size.x / 2;
-		GLfloat distance = (ball->position.x + ball->radius) - centerPaddle;
+		GLfloat distance = abs((ball->position.x + ball->radius) - centerPaddle);
 		GLfloat percentage = distance / (player->size.x / 2);
 		//Then move accordingly
 		GLfloat strength = 2.0f;
 		glm::vec2 oldVelocity = ball->velocity;
 		ball->velocity.x = BALL_INITIAL_VELOCITY.x * percentage * strength;
+		ball->velocity.x *= (oldVelocity.x < 0)?-1:1; //matem a direção da bola ao acertar o paddle
 		ball->velocity = glm::normalize(ball->velocity) * glm::length(oldVelocity);
 		//With sticky paddle correction
 		ball->velocity.y = -1 * abs(ball->velocity.y); 
@@ -170,12 +173,16 @@ void Game::init(){
 
 	//Load shaders
 	ResourceManager::loadShader("shaders/shader1.vert", "shaders/shader1.frag", nullptr, "shader1");
-	
+	ResourceManager::loadShader("shaders/shader2BallParticles.vert", "shaders/shader2BallParticles.frag", nullptr, "particleShader");
+
 	//Configure shaders
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
-	ResourceManager::getShader("shader1").use().setInteger("image", 0);
-	ResourceManager::getShader("shader1").use().setMatrix4("projection", projection);
 	
+	ResourceManager::getShader("shader1").use().setInteger("image", 0);
+	ResourceManager::getShader("shader1").setMatrix4("projection", projection);
+	ResourceManager::getShader("particleShader").use().setInteger("sprite", 0);
+	ResourceManager::getShader("particleShader").setMatrix4("projection", projection);
+
 	renderer = new SpriteRenderer(ResourceManager::getShader("shader1"));
 
 	//Load Textures
@@ -184,6 +191,7 @@ void Game::init(){
 	ResourceManager::loadTexture("textures/block.png", GL_FALSE, "block");
 	ResourceManager::loadTexture("textures/block_solid.png", GL_FALSE, "block_solid");
 	ResourceManager::loadTexture("textures/paddle.png", GL_TRUE, "paddle");
+	ResourceManager::loadTexture("textures/particle.png", GL_TRUE, "particle");
 
 	//Load Levels
 	GameLevel one; one.load("levels/1_Standard.lvl", width, height * 0.5);
@@ -207,6 +215,9 @@ void Game::init(){
 	glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2 - BALL_RADIUS, -BALL_RADIUS * 2);
 
 	ball = new BallObject(ballPos, BALL_RADIUS, BALL_INITIAL_VELOCITY, ResourceManager::getTexture("ball"));
+
+	//Particle generator
+	particlesGen = new ParticleGenerator(ResourceManager::getShader("particleShader"), ResourceManager::getTexture("particle"), 500);
 
 }
 
@@ -275,6 +286,9 @@ void Game::update(GLfloat dt){
 			resetPlayer();
 		}
 
+		//Update particles
+		particlesGen->update(dt, *ball, 2, glm::vec2(ball->radius / 2));
+
 	}
 
 }
@@ -291,6 +305,10 @@ void Game::render(){
 
 		//Draw paddle
 		player->draw(*renderer);
+
+		//Draw particles
+		if(!ball->stuck)
+			particlesGen->draw();
 
 		//Draw ball
 		ball->draw(*renderer);

@@ -1,9 +1,9 @@
 #version 330 core
 
-out vec3 color;
+out vec4 color;
 
 in vec2 TexCoords;
-in vec2 ParticleColor;
+in vec4 ParticleColor;
 
 uniform sampler2D sprite;
 

@@ -41,6 +41,7 @@ glm::vec2 BallObject::move(GLfloat dt, GLuint windowWidth, GLuint windowHeight){
 // Resets the ball to initial Stuck Position (if ball is outside window bounds)
 void BallObject::reset(glm::vec2 position, glm::vec2 velocity){
 	this->position = position;
-	this->velocity = velocity;
+	this->velocity.x = (rand()%2==0?1:-1)*velocity.x; //Faz a bola iniciar para esquerda ou para direita
+	this->velocity.y = velocity.y;
 	this->stuck = true;
 }

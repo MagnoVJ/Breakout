@@ -11,6 +11,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <time.h>
+
 using utility_opengl::ResourceManager;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -48,6 +50,8 @@ int main(int argc, char* argv[]){
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	srand(time(NULL));
 
 	//Inicializações
 	deltaTime = 0.0f;
