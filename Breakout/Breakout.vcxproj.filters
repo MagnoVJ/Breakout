@@ -45,6 +45,9 @@
     <ClCompile Include="src\ParticleGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PostProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -77,12 +80,17 @@
     <ClInclude Include="src\ParticleGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\PostProcessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader1.vert" />
     <None Include="shaders\shader1.frag" />
     <None Include="shaders\shader2BallParticles.vert" />
     <None Include="shaders\shader2BallParticles.frag" />
+    <None Include="shaders\postProcessing.vert" />
+    <None Include="shaders\postProcessing.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="levels\1_Standard.lvl" />

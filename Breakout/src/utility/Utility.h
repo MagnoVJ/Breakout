@@ -6,7 +6,7 @@ namespace utility{
 
 	#define private_attributes private
 	#define private_methods private
-	#define public_methods public
+	#define public_attributes public
 	#define public_methods public
 
 }
