@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PGCollideEffect.h"
 #include "PostProcessor.h"
 #include "ParticleGenerator.h"
 #include "BallObject.h"
@@ -14,6 +15,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <list>
 #include <tuple>
 
 using utility_opengl::ResourceManager;
@@ -31,7 +33,12 @@ enum Direction{
 	LEFT
 };
 
-typedef std::tuple<GLboolean, Direction, glm::vec2> Collision;
+typedef std::tuple<GLboolean, //Ouve colisao
+	               Direction, //Direcao 
+				   glm::vec2, //Diferenca do closest point com o centro da bola
+				   glm::vec2, //Closest point (para o efeito de colisão)
+				   glm::vec2  //Centro do aabb
+                            > Collision;
 
 class Game{
 

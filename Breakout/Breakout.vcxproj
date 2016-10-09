@@ -70,6 +70,9 @@
     <ClCompile Include="src\GameLevel.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\ParticleGenerator.cpp" />
+    <ClCompile Include="src\PGBeam.cpp" />
+    <ClCompile Include="src\PGCollideEffect.cpp" />
+    <ClCompile Include="src\PGFlare.cpp" />
     <ClCompile Include="src\PostProcessor.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\utility\ResourceManager.cpp" />
@@ -82,6 +85,9 @@
     <ClInclude Include="src\GameLevel.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\ParticleGenerator.h" />
+    <ClInclude Include="src\PGBeam.h" />
+    <ClInclude Include="src\PGCollideEffect.h" />
+    <ClInclude Include="src\PGFlare.h" />
     <ClInclude Include="src\PostProcessor.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
     <ClInclude Include="src\utility\ResourceManager.h" />
@@ -90,6 +96,8 @@
     <ClInclude Include="src\utility\Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\pgCollideEffectShader.frag" />
+    <None Include="shaders\pgCollideEffectShader.vert" />
     <None Include="shaders\postProcessing.frag" />
     <None Include="shaders\postProcessing.vert" />
     <None Include="shaders\shader1.frag" />

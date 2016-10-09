@@ -48,6 +48,15 @@
     <ClCompile Include="src\PostProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PGCollideEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PGFlare.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PGBeam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -83,6 +92,15 @@
     <ClInclude Include="src\PostProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\PGCollideEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PGFlare.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PGBeam.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader1.vert" />
@@ -91,6 +109,8 @@
     <None Include="shaders\shader2BallParticles.frag" />
     <None Include="shaders\postProcessing.vert" />
     <None Include="shaders\postProcessing.frag" />
+    <None Include="shaders\pgCollideEffectShader.vert" />
+    <None Include="shaders\pgCollideEffectShader.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="levels\1_Standard.lvl" />

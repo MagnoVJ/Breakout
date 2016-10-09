@@ -61,6 +61,7 @@ void SpriteRenderer::drawSprite(Texture2D& texture, glm::vec2 position, glm::vec
 	shader.setVector3f("spriteColor", color);
 
 	glActiveTexture(GL_TEXTURE0);
+
 	texture.bind();
 
 	glBindVertexArray(quadVAO);

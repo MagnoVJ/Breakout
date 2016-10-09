@@ -8,12 +8,14 @@ const GLfloat BALL_RADIUS = 12.5f;
 const glm::vec2 BALL_INITIAL_VELOCITY(200.0f, -450.0f);
 
 GameObject* player;
-SpriteRenderer* renderer;
+SpriteRenderer* renderer, *rendererPGCollideEffect;
 BallObject* ball;
 ParticleGenerator* particlesGen;
 PostProcessor* postProcessor;
 
 GLfloat shakeTime;
+
+std::list<PGCollideEffect> pgCollideList;
 
 Game::Game(GLuint width, GLuint height)	: state(GAME_ACTIVE), keys(), width(width), height(height){
 
@@ -26,6 +28,7 @@ Game::~Game(){
 
 	delete player;
 	delete renderer;
+	delete rendererPGCollideEffect;
 	delete ball;
 	delete particlesGen;
 	delete postProcessor;
@@ -38,6 +41,7 @@ void Game::init(){
 	ResourceManager::loadShader("shaders/shader1.vert", "shaders/shader1.frag", nullptr, "shader1");
 	ResourceManager::loadShader("shaders/shader2BallParticles.vert", "shaders/shader2BallParticles.frag", nullptr, "particleShader");
 	ResourceManager::loadShader("shaders/postProcessing.vert", "shaders/postProcessing.frag", nullptr, "postprocessing");
+	ResourceManager::loadShader("shaders/pgCollideEffectShader.vert", "shaders/pgCollideEffectShader.frag", nullptr, "pgCollideEffectShader");
 
 	//Configure shaders
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
@@ -46,8 +50,11 @@ void Game::init(){
 	ResourceManager::getShader("shader1").setMatrix4("projection", projection);
 	ResourceManager::getShader("particleShader").use().setInteger("sprite", 0);
 	ResourceManager::getShader("particleShader").setMatrix4("projection", projection);
+	ResourceManager::getShader("pgCollideEffectShader").use().setInteger("image", 0);
+	ResourceManager::getShader("pgCollideEffectShader").setMatrix4("projection", projection);
 
-	renderer = new SpriteRenderer(ResourceManager::getShader("shader1"));
+	renderer                = new SpriteRenderer(ResourceManager::getShader("shader1"));
+	rendererPGCollideEffect = new SpriteRenderer(ResourceManager::getShader("pgCollideEffectShader"));
 
 	//Load Textures
 	ResourceManager::loadTexture("textures/background.jpg", GL_FALSE, "background");
@@ -56,6 +63,16 @@ void Game::init(){
 	ResourceManager::loadTexture("textures/block_solid.png", GL_FALSE, "block_solid");
 	ResourceManager::loadTexture("textures/paddle.png", GL_TRUE, "paddle");
 	ResourceManager::loadTexture("textures/particle.png", GL_TRUE, "particle");
+
+	//PGCollideEffectShader
+	ResourceManager::loadTexture("textures/blueBeam.png", GL_TRUE, "beamTexture");
+	ResourceManager::loadTexture("textures/blueFleshlight.png", GL_TRUE, "flareTexture");
+	ResourceManager::loadTexture("textures/greenBeam.png", GL_TRUE, "greenBeam");
+	ResourceManager::loadTexture("textures/greenFleshlight.png", GL_TRUE, "greenFleshlight");
+	ResourceManager::loadTexture("textures/yellowBeam.png", GL_TRUE, "yellowBeam");
+	ResourceManager::loadTexture("textures/yellowFleshlight.png", GL_TRUE, "yellowFleshlight");
+	ResourceManager::loadTexture("textures/orangeBeam.png", GL_TRUE, "orangeBeam");
+	ResourceManager::loadTexture("textures/orangeFleshlight.png", GL_TRUE, "orangeFleshlight");
 
 	//Load Levels
 	GameLevel one; one.load("levels/1_Standard.lvl", width, height * 0.5);
@@ -105,6 +122,20 @@ void Game::update(GLfloat dt){
 		//Update particles
 		particlesGen->update(dt, *ball, 2, glm::vec2(ball->radius / 2));
 
+		//Update PGCollideEffect
+		for(std::list<PGCollideEffect>::iterator it = pgCollideList.begin(); it != pgCollideList.end();){
+			PGCollideEffect& pgRef = *it;
+			if(glfwGetTime() - pgRef.birth > 0.3)
+				pgCollideList.erase(it++);
+			else
+				++it;
+		}
+		
+		for(std::list<PGCollideEffect>::iterator& it = pgCollideList.begin(); it != pgCollideList.end(); it++){
+			PGCollideEffect& pgRef = *it;
+			pgRef.update(dt);
+		}
+		
 		//Reduce shake time
 		if(shakeTime > 0.0f){
 			shakeTime -= dt;
@@ -136,6 +167,12 @@ void Game::render(){
 			//Draw particles
 			if(!ball->stuck)
 				particlesGen->draw();
+
+			//Draw PGCollideEffect
+			for(std::list<PGCollideEffect>::iterator& it = pgCollideList.begin(); it != pgCollideList.end(); it++){
+				PGCollideEffect& pgRef = *it;
+				pgRef.draw();
+			}
 
 			//Draw ball
 			ball->draw(*renderer);
@@ -179,9 +216,9 @@ Collision Game::checkCollision(const BallObject& one, const GameObject& two){
 	difference = closest - center;
 
 	if(glm::length(difference) <= one.radius)
-		return std::make_tuple(GL_TRUE, vectorDirection(difference), difference);
+		return std::make_tuple(GL_TRUE, vectorDirection(difference), difference, closest, aabb_center);
 	else
-		return std::make_tuple(GL_FALSE, UP, glm::vec2(0, 0));
+		return std::make_tuple(GL_FALSE, UP, glm::vec2(0, 0), closest, aabb_center);
 
 }
 
@@ -248,6 +285,45 @@ void Game::doCollisions(){
 						ball->position.y -= penetration; //Move ball back up
 					else
 						ball->position.y += penetration; //Move ball back down
+
+				}
+
+				if(!box.isSolid){
+
+					Texture2D* textureBeam;
+					Texture2D* textureFleshLight;
+
+					if(box.color.x == 0.2f && box.color.y == 0.6f && box.color.z == 1.0f){ //Blue
+						textureBeam = &ResourceManager::getTexture("beamTexture");
+						textureFleshLight = &ResourceManager::getTexture("flareTexture");
+					}
+					else if(box.color.x == 0.0f && box.color.y == 0.7f && box.color.z == 0.0f){ //green
+						textureBeam = &ResourceManager::getTexture("greenBeam");
+						textureFleshLight = &ResourceManager::getTexture("greenFleshlight");
+					}
+					else if(box.color.x == 0.8f && box.color.y == 0.8f && box.color.z == 0.4f){ //yellow
+						textureBeam = &ResourceManager::getTexture("yellowBeam");
+						textureFleshLight = &ResourceManager::getTexture("yellowFleshlight");
+					}
+					else{
+						textureBeam = &ResourceManager::getTexture("orangeBeam");
+						textureFleshLight = &ResourceManager::getTexture("orangeFleshlight");
+					}
+
+					PGCollideEffect pgCollEffect(ResourceManager::getShader("pgCollideEffectShader"), 
+												 *textureBeam,
+												 *textureFleshLight,
+												 *rendererPGCollideEffect,
+												 std::get<4>(collision),
+												 std::get<3>(collision), //closest point
+												 30,                     //Quantidade de beams
+												 20,                     //Raio do spawn       
+												 20,                     //Size beam
+												 50,                     //Size flare
+												 glm::vec3(1.0f),        //Color
+												 glfwGetTime());         //Birth   
+
+					pgCollideList.push_front(pgCollEffect);
 
 				}
 
