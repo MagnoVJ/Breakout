@@ -74,9 +74,11 @@
     <ClCompile Include="src\PGCollideEffect.cpp" />
     <ClCompile Include="src\PGFlare.cpp" />
     <ClCompile Include="src\PostProcessor.cpp" />
+    <ClCompile Include="src\PowerUp.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\utility\ResourceManager.cpp" />
     <ClCompile Include="src\utility\Shader.cpp" />
+    <ClCompile Include="src\utility\TextRenderer.cpp" />
     <ClCompile Include="src\utility\Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +91,11 @@
     <ClInclude Include="src\PGCollideEffect.h" />
     <ClInclude Include="src\PGFlare.h" />
     <ClInclude Include="src\PostProcessor.h" />
+    <ClInclude Include="src\PowerUp.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
     <ClInclude Include="src\utility\ResourceManager.h" />
     <ClInclude Include="src\utility\Shader.h" />
+    <ClInclude Include="src\utility\TextRenderer.h" />
     <ClInclude Include="src\utility\Texture2D.h" />
     <ClInclude Include="src\utility\Utility.h" />
   </ItemGroup>

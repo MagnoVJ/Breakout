@@ -1,9 +1,9 @@
 #include "BallObject.h"
 
-BallObject::BallObject() : GameObject(), radius(12.5f), stuck(true) { }
+BallObject::BallObject() : GameObject(), radius(12.5f), stuck(true), sticky(GL_FALSE), passThrough(GL_FALSE) { }
 
 BallObject::BallObject(glm::vec2 pos, GLfloat radius, glm::vec2 velocity, Texture2D sprite) 
-	: GameObject(pos, glm::vec2(radius * 2, radius * 2), sprite, glm::vec3(1.0f), velocity), radius(radius), stuck(true){ }
+	: GameObject(pos, glm::vec2(radius * 2, radius * 2), sprite, glm::vec3(1.0f), velocity), radius(radius), stuck(true), sticky(GL_FALSE), passThrough(GL_FALSE) { }
 
 glm::vec2 BallObject::move(GLfloat dt, GLuint windowWidth, GLuint windowHeight){
 
@@ -43,5 +43,7 @@ void BallObject::reset(glm::vec2 position, glm::vec2 velocity){
 	this->position = position;
 	this->velocity.x = (rand()%2==0?1:-1)*velocity.x; //Faz a bola iniciar para esquerda ou para direita
 	this->velocity.y = velocity.y;
-	this->stuck = true;
+	stuck = true;
+	sticky = false;
+	passThrough = false;
 }

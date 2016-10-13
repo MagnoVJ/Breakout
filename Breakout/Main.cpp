@@ -58,7 +58,7 @@ int main(int argc, char* argv[]){
 	lastFrame  = 0.0f;
 	breakout = new Game(WIDTH, HEIGHT);
 
-	breakout->state = GAME_ACTIVE;
+	breakout->state = GAME_MENU;
 
 	breakout->init();
 
@@ -102,8 +102,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if(key >= 0 && key < 1024){
 		if(action == GLFW_PRESS)
 			breakout->keys[key] = GL_TRUE;
-		else if(action == GLFW_RELEASE)
+		else if(action == GLFW_RELEASE){
 			breakout->keys[key] = GL_FALSE;
+			breakout->keysProcessed[key] = GL_FALSE;
+		}
 	}
 
 }

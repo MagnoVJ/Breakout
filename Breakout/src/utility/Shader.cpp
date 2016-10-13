@@ -127,7 +127,7 @@ namespace utility_opengl{
 					<< std::endl;
 			}
 			else
-				std::cout << std::endl << "Programa foi linkado com sucesso." << std::endl << std::endl << std::endl;
+				std::cout << std::endl << "Programa foi linkado com sucesso." << std::endl << std::endl;
 		}
 	}
 

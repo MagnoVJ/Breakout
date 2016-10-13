@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PowerUp.h"
 #include "PGCollideEffect.h"
 #include "PostProcessor.h"
 #include "ParticleGenerator.h"
@@ -7,6 +8,9 @@
 #include "GameLevel.h"
 #include "SpriteRenderer.h"
 #include "utility/ResourceManager.h"
+#include "utility/TextRenderer.h"
+
+#include <irrKlang.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,10 +19,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <algorithm>
 #include <list>
 #include <tuple>
 
 using utility_opengl::ResourceManager;
+using utility_opengl::TextRenderer;
 
 enum GameState{
 	GAME_ACTIVE,
@@ -51,15 +57,28 @@ private:
 	void resetLevel();
 	void resetPlayer();
 
+	//PowerUps
+	void spawnPowerUps(GameObject& block);
+	void updatePowerUps(GLfloat dt);
+	GLboolean shouldSpawn(GLuint chance);
+
+	void activatePowerUp(PowerUp& powerUp);
+	GLboolean isOtherPowerUpActive(std::vector<PowerUp>& powerUps, std::string type);
+
 public:
 	//Game state
 	GameState state;
 	GLboolean keys[1024];
+	GLboolean keysProcessed[1024];
 	GLuint width, height;
+	GLuint lives;
 
 	//Levels
 	std::vector<GameLevel> levels;
 	GLuint                 level;
+
+	//PowerUps
+	std::vector<PowerUp> powerUps;
 
 	//Constructor/Destructor
 	Game(GLuint width, GLuint height);

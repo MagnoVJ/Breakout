@@ -40,7 +40,6 @@ PGCollideEffect::PGCollideEffect(Shader shader, Texture2D textureBeam, Texture2D
 
 	}
 
-
 	flare.position = glm::vec2(this->posFlareCenter.x - this->sizeFlare / 2, this->posFlareCenter.y - this->sizeFlare / 2);
 	flare.size = glm::vec2(this->sizeFlare, this->sizeFlare);
 
